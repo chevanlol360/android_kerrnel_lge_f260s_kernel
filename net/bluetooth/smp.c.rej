@@ -1,0 +1,25 @@
+--- net/bluetooth/smp.c	2014-06-19 00:15:30.000000000 +0900
++++ net/bluetooth/smp.c	2014-08-07 23:57:50.000000000 +0900
+@@ -714,10 +712,6 @@
+ invalid_key:
+ 	hcon->sec_req = FALSE;
+ 
+-	/* Switch to Pairing Connection Parameters */
+-	hci_le_conn_update(hcon, SMP_MIN_CONN_INTERVAL, SMP_MAX_CONN_INTERVAL,
+-		SMP_MAX_CONN_LATENCY, SMP_SUPERVISION_TIMEOUT);
+-
+ 	skb_pull(skb, sizeof(*rp));
+ 
+ 	memset(&cp, 0, sizeof(cp));
+@@ -778,11 +772,6 @@
+ 	if (hcon->link_mode & HCI_LM_MASTER) {
+ 		struct smp_cmd_pairing cp;
+ 
+-		/* Switch to Pairing Connection Parameters */
+-		hci_le_conn_update(hcon, SMP_MIN_CONN_INTERVAL,
+-			SMP_MAX_CONN_INTERVAL, SMP_MAX_CONN_LATENCY,
+-			SMP_SUPERVISION_TIMEOUT);
+-
+ 		build_pairing_cmd(conn, &cp, NULL, authreq);
+ 		hcon->preq[0] = SMP_CMD_PAIRING_REQ;
+ 		memcpy(&hcon->preq[1], &cp, sizeof(cp));
